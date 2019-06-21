@@ -24,7 +24,7 @@
 
     {% if organization %}
         <h2>Organization Data</h2>
-        <table id="example" class="display" style="width:100%">
+        <table id="organization_data" class="display" style="width:100%">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -61,7 +61,7 @@
 
     {% if organization %}
         $(document).ready(function() {
-            $('#example').DataTable( {
+            $('#organization_data').DataTable( {
                 "ajax": '/githup-data/{{ organization }}'
             } );
         } );
