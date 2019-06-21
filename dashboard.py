@@ -1,13 +1,16 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
+
+from github import repo_stats
 
 app = Flask(__name__, static_url_path="/static")
 
 @app.route('/')
-def index():
+@app.route('/<organization>')
+def index(organization=None):
     """Show the main dashboard"""
-    return render_template('index.html')
+    return render_template('index.html', organization=organization)
 
-@app.route('/githup/<organization>')
+@app.route('/githup-data/<organization>')
 def get_orgs_github_data(organization):
     """Get the an organizations github information
     
@@ -16,4 +19,7 @@ def get_orgs_github_data(organization):
         
     Return: Json data
     """
-    return 'Get info for %s' % organization
+    data = repo_stats(organization)
+    return jsonify(data)
+
+

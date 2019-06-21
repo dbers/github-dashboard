@@ -2,11 +2,70 @@
 <html lang="en">
 <head>
     <title>Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="/static/DataTables/datatables.min.css"/>
-    <script type="text/javascript" src="/static/DataTables/datatables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/DataTables/Bootstrap-4-4.1.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/DataTables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/DataTables/AutoFill-2.3.3/css/autoFill.bootstrap4.css"/>
+    
+    <script type="text/javascript" src="/static/DataTables/jQuery-3.3.1/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="/static/DataTables/Bootstrap-4-4.1.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/DataTables/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/static/DataTables/DataTables-1.10.18/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="/static/DataTables/AutoFill-2.3.3/js/dataTables.autoFill.min.js"></script>
+    <script type="text/javascript" src="/static/DataTables/AutoFill-2.3.3/js/autoFill.bootstrap4.min.js"></script>
 </head>
 <body>
     <h1>Dashboard</h1>
+    <h2>Look an organization</h2>
+    <form id="set_org_name">
+        <input id="new_organization" type="text" placeholder="Organization name" size="40">
+        <input type="submit" value="Look Up Stats">
+    </form>
 
+    {% if organization %}
+        <h2>Organization Data</h2>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Extn.</th>
+                    <th>Start date</th>
+                    <th>Salary</th>
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Extn.</th>
+                    <th>Start date</th>
+                    <th>Salary</th>
+                </tr>
+            </tfoot>
+        </table>
+    {% endif %}
+
+
+
+<script>
+    $(document).ready(function() {
+        $("#set_org_name").submit(function(e) {
+            e.preventDefault();
+            organization = $("#new_organization").val()
+            window.location.replace( '/' + organization );
+        });
+    });
+
+    {% if organization %}
+        $(document).ready(function() {
+            $('#example').DataTable( {
+                "ajax": '/githup-data/{{ organization }}'
+            } );
+        } );
+    {% endif %}
+    </script>
 </body>
 </html>
