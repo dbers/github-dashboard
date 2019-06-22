@@ -1,13 +1,22 @@
+# Github Dashboard
+
 Currently Supports loading up an organizations repos and sotrting by:
 - name
 - stars
 - forks
 - contributors
 
-Do to the slowness of computing `contributors`, the data is cashed when fetching from services.
+Do to the slowness of computing `contributors`, the data is cached when fetching from services.
 
+## Installation 
+Use the following steps to run project (in shell)
+```
+git clone git@github.com:dbers/github-dashboard.git
+cd github-dashboard
+pipenv install
+```
 
-Running Project
+## Running Project 
 Requires GITHUB_TOKEN is set.  Then just run:
 ```
 
