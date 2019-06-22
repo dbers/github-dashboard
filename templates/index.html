@@ -28,21 +28,17 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Extn.</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Stars</th>
+                    <th>Forks</th>
+                    <th>Contributors</th>
                 </tr>
             </thead>
             <tfoot>
                 <tr>
                     <th>Name</th>
-                    <th>Position</th>
-                    <th>Office</th>
-                    <th>Extn.</th>
-                    <th>Start date</th>
-                    <th>Salary</th>
+                    <th>Stars</th>
+                    <th>Forks</th>
+                    <th>Contributors</th>
                 </tr>
             </tfoot>
         </table>
@@ -62,7 +58,13 @@
     {% if organization %}
         $(document).ready(function() {
             $('#organization_data').DataTable( {
-                "ajax": '/githup-data/{{ organization }}'
+                "ajax": '/githup-data/{{ organization }}',
+                "columns": [
+                    { "data": "name" },
+                    { "data": "stars" },
+                    { "data": "forks" },
+                    { "data": "contributors" }
+                ]
             } );
         } );
     {% endif %}

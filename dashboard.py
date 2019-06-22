@@ -1,8 +1,10 @@
 from flask import Flask, render_template, jsonify
+from flask_caching import Cache
 
-from github import repo_stats
+from github_data import repo_stats
 
 app = Flask(__name__, static_url_path="/static")
+cache = Cache(app, config={'CACHE_TYPE': 'simple'})
 
 @app.route('/')
 @app.route('/<organization>')
@@ -19,7 +21,18 @@ def get_orgs_github_data(organization):
         
     Return: Json data
     """
-    data = repo_stats(organization)
-    return jsonify(data)
+
+    # first try to load from cache
+    cache_key = "repos-{}".format(organization)
+    data = cache.get( cache_key )
+    if data is None:
+        data = repo_stats(organization)
+        cache.set(cache_key, data)
+    
+    # create return format DataTables needs
+    datatables_data = {
+        "data": data
+    }
+    return jsonify(datatables_data)
 
 
